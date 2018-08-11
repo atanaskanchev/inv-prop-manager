@@ -16,6 +16,9 @@ jobs:
 
     working_directory: ~/repo
 
+    environment:
+      FIREBASE_DEPLOY_TOKEN: 1/KfpkIORufz7B9zLl4ceGJml5YXtszwA870ZuQHF2gb0
+
     steps:
       - checkout
 
@@ -36,26 +39,10 @@ jobs:
       # run tests!
       - run: yarn test
 
-  deploy-job:
-    environment:
-      FIREBASE_DEPLOY_TOKEN: 1/KfpkIORufz7B9zLl4ceGJml5YXtszwA870ZuQHF2gb0
-    docker:
-      - image: my-image-version-tag
-    working_directory: ~/repo/build
-    steps:
       - run:
-          name: Deploy Master to Firebase
+          name: build
+          command: npm run build
+
+      - run:
+          name: Deploying to Firebase hosting
           command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
-
-    workflows:
-      version: 2
-
-      -deploy:
-        jobs:
-          - build-job
-          - deploy-job:
-              requires:
-                - build-job
-              filters:
-                branches:
-                  only: master
