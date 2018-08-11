@@ -38,9 +38,25 @@ jobs:
 
       # run tests!
       - run: yarn test
-    deployment:
-      production:
-        branch: master
-        commands:
-          - firebase use default
-          - firebase deploy --token=$FIREBASE_TOKEN --non-interactive
+
+  deploy-job:
+    docker:
+      - image: my-image-version-tag
+    working_directory: ~/repo
+    steps:
+      - run:
+          name: Deploy Master to Firebase
+          command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
+
+    workflows:
+      version: 2
+
+      -deploy:
+        jobs:
+          - build-job
+          - deploy-job:
+              requires:
+                - build-job
+              filters:
+                branches:
+                  only: master
