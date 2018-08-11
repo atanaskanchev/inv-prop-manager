@@ -3,10 +3,10 @@ import { Link, withRouter } from 'react-router-dom';
 import * as routes from '../../constants/routes';
 import { auth } from '../../firebase';
 
-const SignUpPage = () => (
+const SignUpPage = ({ history }) => (
   <div>
     <h1>Sign up</h1>
-    <SignUpForm />
+    <SignUpForm history={history} />
   </div>
 );
 
@@ -24,11 +24,13 @@ class SignUpForm extends Component {
     this.state = { ...INITIAL_STATE };
   }
   onSubmit = event => {
-    const { username, email, passwordOne } = this.state;
+    const { email, passwordOne } = this.state;
+    const { history } = this.props;
     auth
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
+        history.push(routes.HOME);
       })
       .catch(error => {
         this.setState(byPropKey('error', error));
