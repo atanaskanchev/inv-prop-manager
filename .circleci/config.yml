@@ -41,5 +41,4 @@ jobs:
 
       - run:
           name: Deploy to Firebase hosting
-          working_directory: ~/repo/build
-          command: ././node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
+          command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
