@@ -6,7 +6,7 @@ import { SignInLink } from '../SignIn';
 
 const SignUpPage = ({ history }) => (
   <div>
-    <h1>Sign up</h1>
+    <h1>Sign Up</h1>
     <SignUpForm history={history} />
     <SignInLink />
   </div>
@@ -107,7 +107,7 @@ const byPropKey = (propertyName, value) => () => ({
 
 const SignUpLink = () => (
   <p>
-    Do you have an account? <Link to={routes.SIGN_UP}>Sign up</Link>
+    Don't have an account? <Link to={routes.SIGN_UP}>Sign up</Link>
   </p>
 );
 export default withRouter(SignUpPage);
