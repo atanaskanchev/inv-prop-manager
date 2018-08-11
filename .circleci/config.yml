@@ -27,9 +27,6 @@ jobs:
             - v1-dependencies-
 
       - run: yarn install
-      - run:
-          name: Install firebase-tools
-          command: npm install -g firebase-tools
 
       - save_cache:
           paths:
@@ -40,6 +37,8 @@ jobs:
       - run: yarn test
 
   deploy-job:
+    environment:
+      FIREBASE_DEPLOY_TOKEN: 1/KfpkIORufz7B9zLl4ceGJml5YXtszwA870ZuQHF2gb0
     docker:
       - image: my-image-version-tag
     working_directory: ~/repo
