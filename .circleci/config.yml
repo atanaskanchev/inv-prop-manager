@@ -44,7 +44,7 @@ jobs:
     working_directory: ~/repo/build
     steps:
       - run:
-          name: Deploy Master to Firebase
+          name: Deploy Master to Firebase hosting
           command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
 
     workflows:
