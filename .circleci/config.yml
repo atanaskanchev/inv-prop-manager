@@ -40,5 +40,9 @@ jobs:
       - run: yarn test
 
       - run:
-          name: Deploy to Firebase hosting
+          name: build
+          command: npm run build
+
+      - run:
+          name: Deploying to Firebase hosting
           command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
