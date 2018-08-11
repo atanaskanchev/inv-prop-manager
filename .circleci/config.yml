@@ -41,7 +41,7 @@ jobs:
       FIREBASE_DEPLOY_TOKEN: 1/KfpkIORufz7B9zLl4ceGJml5YXtszwA870ZuQHF2gb0
     docker:
       - image: my-image-version-tag
-    working_directory: ~/repo
+    working_directory: ~/repo/build
     steps:
       - run:
           name: Deploy Master to Firebase
