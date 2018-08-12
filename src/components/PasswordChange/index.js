@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
+
 import { auth } from '../../firebase';
 
-const PasswordChangePage = () => (
-  <div>
-    <h1>PasswordChange</h1>
-    <PasswordChangeForm />
-  </div>
-);
+const updateByPropertyName = (propertyName, value) => () => ({
+  [propertyName]: value
+});
 
 const INITIAL_STATE = {
   passwordOne: '',
@@ -17,18 +15,20 @@ const INITIAL_STATE = {
 class PasswordChangeForm extends Component {
   constructor(props) {
     super(props);
+
     this.state = { ...INITIAL_STATE };
   }
+
   onSubmit = event => {
     const { passwordOne } = this.state;
 
     auth
-      .doPasswordChange(passwordOne)
+      .doPasswordUpdate(passwordOne)
       .then(() => {
-        this.setState({ ...INITIAL_STATE });
+        this.setState(() => ({ ...INITIAL_STATE }));
       })
       .catch(error => {
-        this.setState(byPropKey('error', error));
+        this.setState(updateByPropertyName('error', error));
       });
 
     event.preventDefault();
@@ -36,41 +36,39 @@ class PasswordChangeForm extends Component {
 
   render() {
     const { passwordOne, passwordTwo, error } = this.state;
+
     const isInvalid = passwordOne !== passwordTwo || passwordOne === '';
 
     return (
       <form onSubmit={this.onSubmit}>
         <input
           value={passwordOne}
-          type="password"
-          name="passwordOne"
           onChange={event =>
-            this.setState({ [event.target.name]: event.target.value })
+            this.setState(
+              updateByPropertyName('passwordOne', event.target.value)
+            )
           }
+          type="password"
           placeholder="New Password"
-          autoComplete="new-password"
         />
         <input
           value={passwordTwo}
-          type="password"
-          name="passwordTwo"
           onChange={event =>
-            this.setState({ [event.target.name]: event.target.value })
+            this.setState(
+              updateByPropertyName('passwordTwo', event.target.value)
+            )
           }
+          type="password"
           placeholder="Confirm New Password"
-          autoComplete="new-password"
         />
         <button disabled={isInvalid} type="submit">
-          Change password
+          Reset My Password
         </button>
+
         {error && <p>{error.message}</p>}
       </form>
     );
   }
 }
 
-const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value
-});
-
-export default PasswordChangePage;
+export default PasswordChangeForm;

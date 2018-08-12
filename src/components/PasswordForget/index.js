@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
@@ -11,6 +11,10 @@ const PasswordForgetPage = () => (
   </div>
 );
 
+const updateByPropertyName = (propertyName, value) => () => ({
+  [propertyName]: value
+});
+
 const INITIAL_STATE = {
   email: '',
   error: null
@@ -19,18 +23,20 @@ const INITIAL_STATE = {
 class PasswordForgetForm extends Component {
   constructor(props) {
     super(props);
+
     this.state = { ...INITIAL_STATE };
   }
+
   onSubmit = event => {
     const { email } = this.state;
 
     auth
       .doPasswordReset(email)
       .then(() => {
-        this.setState({ ...INITIAL_STATE });
+        this.setState(() => ({ ...INITIAL_STATE }));
       })
       .catch(error => {
-        this.setState(byPropKey('error', error));
+        this.setState(updateByPropertyName('error', error));
       });
 
     event.preventDefault();
@@ -44,27 +50,22 @@ class PasswordForgetForm extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         <input
-          value={email}
-          type="email"
-          name="email"
+          value={this.state.email}
           onChange={event =>
-            this.setState({ [event.target.name]: event.target.value })
+            this.setState(updateByPropertyName('email', event.target.value))
           }
-          placeholder="email"
-          autoComplete="username"
+          type="text"
+          placeholder="Email Address"
         />
         <button disabled={isInvalid} type="submit">
-          Reset my password
+          Reset My Password
         </button>
+
         {error && <p>{error.message}</p>}
       </form>
     );
   }
 }
-
-const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value
-});
 
 const PasswordForgetLink = () => (
   <p>
@@ -72,6 +73,6 @@ const PasswordForgetLink = () => (
   </p>
 );
 
-export default withRouter(PasswordForgetPage);
+export default PasswordForgetPage;
 
 export { PasswordForgetForm, PasswordForgetLink };
