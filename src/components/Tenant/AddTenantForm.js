@@ -66,7 +66,7 @@ class AddTenantForm extends Component {
     console.log('tenant :', tenant);
     firestore
       .doCreateTenant(tenant)
-      .then((this.state = { ...INITIAL_STATE }))
+      .then(this.setState(() => ({ ...INITIAL_STATE })))
       .then(this.setState({ id: uuidv1() }))
       .catch(error => this.setState('error', error));
 
