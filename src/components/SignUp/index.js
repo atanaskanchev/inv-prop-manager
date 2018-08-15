@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-
-import { auth, db } from '../../firebase';
+import { auth, firestore } from '../../firebase/index';
 import * as routes from '../../constants/routes';
 
 const SignUpPage = ({ history }) => (
@@ -26,7 +25,6 @@ const INITIAL_STATE = {
 class SignUpForm extends Component {
   constructor(props) {
     super(props);
-
     this.state = { ...INITIAL_STATE };
   }
 
@@ -38,8 +36,9 @@ class SignUpForm extends Component {
     auth
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
-        // Create a user in your own accessible Firebase Database too
-        db.doCreateUser(authUser.user.uid, username, email)
+        //firestore
+        firestore
+          .doAddUser(authUser.user.uid, username, email)
           .then(() => {
             this.setState(() => ({ ...INITIAL_STATE }));
             history.push(routes.HOME);

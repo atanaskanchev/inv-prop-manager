@@ -1,6 +1,6 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/database';
+import firebase from 'firebase';
+import 'firebase/auth/dist/index.cjs';
+import 'firebase/database/dist/index.cjs';
 
 /*
     Firebase config and initialisation
@@ -17,7 +17,10 @@ const config = {
 // Initialize Firebase
 if (!firebase.apps.length) firebase.initializeApp(config);
 
-const db = firebase.database();
+const realTimeDB = firebase.database();
+const firestore = firebase.firestore();
+const settings = { timestampsInSnapshots: true };
+firestore.settings(settings);
 const auth = firebase.auth();
 
-export { auth, db };
+export { auth, realTimeDB, firestore };
