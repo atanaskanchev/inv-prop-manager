@@ -63,6 +63,7 @@ class SignInForm extends Component {
           }
           type="text"
           placeholder="Email Address"
+          autoComplete="username"
         />
         <input
           value={password}
@@ -71,6 +72,7 @@ class SignInForm extends Component {
           }
           type="password"
           placeholder="Password"
+          autoComplete="current-password"
         />
         <button disabled={isInvalid} type="submit">
           Sign In

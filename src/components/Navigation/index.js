@@ -24,6 +24,9 @@ const NavigationAuth = () => (
       <Link to={routes.TENANTS}>Tenants</Link>
     </li>
     <li>
+      <Link to={routes.TODO}>Todo</Link>
+    </li>
+    <li>
       <SignOutButton />
     </li>
   </ul>

@@ -1,5 +1,7 @@
 import { firestore } from './firebase';
 
+let USERS_DOC_REF = firestore.collection('users');
+
 export const doAddUser = (userId, username, email) => {
   return firestore
     .collection('users')
@@ -10,8 +12,13 @@ export const doAddUser = (userId, username, email) => {
     });
 };
 
-export const doCreateTenant = tenant => {
-  console.log('doCreateTenant tenant :', tenant);
+export const doGetUsers = () => {
+  const result = USERS_DOC_REF.get();
+  console.log('result :', result);
+  return result;
+};
+
+export const doAddTenant = tenant => {
   return firestore
     .collection('users')
     .doc(tenant.uid)

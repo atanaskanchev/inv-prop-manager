@@ -5,18 +5,21 @@ import withAuthorization from '../Session/withAuthorization';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 
-const TenanatsPage = ({ authUser }) => {
+const TenanatsPage = props => {
   return (
     <div>
       <AddTenantForm />
-      <TenantsList />
+      <TenantsList tenants={this.props} />
     </div>
   );
 };
 
-const mapStateToProps = state => ({
-  authUser: state.sessionState.authUser
-});
+const mapStateToProps = state => {
+  return {
+    authUser: state.sessionState.authUser,
+    tenants: state.tenantsState.tenants
+  };
+};
 
 const authCondition = authUser => !!authUser;
 

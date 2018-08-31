@@ -65,7 +65,7 @@ class AddTenantForm extends Component {
     console.log('authUser :', authUser.uid);
     console.log('tenant :', tenant);
     firestore
-      .doCreateTenant(tenant)
+      .doAddTenant(tenant)
       .then(this.setState(() => ({ ...INITIAL_STATE })))
       .then(this.setState({ id: uuidv1() }))
       .catch(error => this.setState('error', error));
@@ -164,7 +164,8 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => ({
-  authUser: state.sessionState.authUser
+  authUser: state.sessionState.authUser,
+  tenants: state.tenantsState.tenants
 });
 
 const authCondition = authUser => !!authUser;
