@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "firebase": "^5.3.1",
+    "firebase": "^5.4.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",
@@ -19,6 +19,6 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "firebase-tools": "^4.1.0"
+    "firebase-tools": "^4.2.1"
   }
 }
